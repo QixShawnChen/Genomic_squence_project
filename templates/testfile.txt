@@ -1,0 +1,5 @@
+>description__
+AACTGATGC
+
+>description2__
+CGATTTACGCGCGTATAGGGG

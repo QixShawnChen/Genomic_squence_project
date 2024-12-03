@@ -1,0 +1,30 @@
+Results for description__:
+Original Sequence: AACTGA
+Transcription: AACUGA
+Translation: N*
+ORFs: No ORFs found
+GC Content: 33.33%
+CpG Islands: No CpG islands found
+Codon Usage: {'AAC': 1, 'TGA': 1}
+Restriction Sites: {EcoRI: [], HindIII: [], NotI: [], BamHI: []}
+
+Results for description2__:
+Original Sequence: CGATTTACGCGCGTATAGGGG
+Transcription: CGAUUUACGCGCGUAUAGGGG
+Translation: RFTRV*G
+ORFs: No ORFs found
+GC Content: 57.14%
+CpG Islands: No CpG islands found
+Codon Usage: {'CGA': 1, 'TTT': 1, 'ACG': 1, 'CGC': 1, 'GTA': 1, 'TAG': 1, 'GGG': 1}
+Restriction Sites: {EcoRI: [], HindIII: [], NotI: [], BamHI: []}
+
+Results for description3__:
+Original Sequence: CGATTTACGCGCGTATAGGGGAAATTTTCCCCGGGATCGATCGATCG
+Transcription: CGAUUUACGCGCGUAUAGGGGAAAUUUUCCCCGGGAUCGAUCGAUCG
+Translation: RFTRV*GKFSPGSID
+ORFs: No ORFs found
+GC Content: 53.19%
+CpG Islands: No CpG islands found
+Codon Usage: {'CGA': 1, 'TTT': 2, 'ACG': 1, 'CGC': 1, 'GTA': 1, 'TAG': 1, 'GGG': 1, 'AAA': 1, 'TCC': 1, 'CCG': 1, 'GGA': 1, 'TCG': 1, 'ATC': 1, 'GAT': 1}
+Restriction Sites: {EcoRI: [], HindIII: [], NotI: [], BamHI: []}
+

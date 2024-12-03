@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Species ID</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Species ID</h1>
+
+    <form method="POST">
+        <label for="taxonomy_id">Enter Taxonomy ID (e.g., 9606 for humans):</label><br>
+        <input type="text" name="taxonomy_id" id="taxonomy_id" required><br><br>
+        <button type="submit">Fetch Matrices</button>
+    </form>
+
+    <h2>Species List:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Species</th>
+                <th>Common Name</th>
+                <th>Taxonomy ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Homo sapiens</td>
+                <td>Human</td>
+                <td>9606</td>
+            </tr>
+            <tr>
+                <td>Mus musculus</td>
+                <td>Mouse</td>
+                <td>10090</td>
+            </tr>
+            <tr>
+                <td>Rattus norvegicus</td>
+                <td>Rat</td>
+                <td>10116</td>
+            </tr>
+            <tr>
+                <td>Gallus gallus</td>
+                <td>Chicken</td>
+                <td>9031</td>
+            </tr>
+            <tr>
+                <td>Danio rerio</td>
+                <td>Zebrafish</td>
+                <td>7955</td>
+            </tr>
+            <tr>
+                <td>Drosophila melanogaster</td>
+                <td>Fruit Fly</td>
+                <td>7227</td>
+            </tr>
+            <tr>
+                <td>Caenorhabditis elegans</td>
+                <td>Nematode (C. elegans)</td>
+                <td>6239</td>
+            </tr>
+            <tr>
+                <td>Saccharomyces cerevisiae</td>
+                <td>Baker's Yeast</td>
+                <td>4932</td>
+            </tr>
+            <tr>
+                <td>Arabidopsis thaliana</td>
+                <td>Thale Cress</td>
+                <td>3702</td>
+            </tr>
+            <tr>
+                <td>Zea mays</td>
+                <td>Corn (Maize)</td>
+                <td>4577</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/" class="button">Back to Homepage</a>
+
+    {% if results %}
+        {% if results.error %}
+            <p style="color: red;">Error: {{ results.error }}</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
+
+

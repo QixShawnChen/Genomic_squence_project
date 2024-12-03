@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix List</title>
+</head>
+<body>
+    <h1>Matrix of {{ taxonomy_id }} IDs</h1>
+
+    <!-- Display the list of matrices -->
+    <ul>
+        {% for matrix_id in matrices %}
+            <li>{{ matrix_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form to directly navigate to /jaspar/scan -->
+    <form method="GET" action="/jaspar/scan">
+        <input type="hidden" name="taxonomy_id" value="{{ taxonomy_id }}">
+        {% for matrix_id in matrices %}
+            <input type="hidden" name="matrices" value="{{ matrix_id }}">
+        {% endfor %}
+
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>
+

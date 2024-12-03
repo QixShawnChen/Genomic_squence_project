@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Binding Sites</title>
+
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scan Binding Sites for Taxonomy ID: {{ taxonomy_id }}</h1>
+
+    <h2>Available Matrices:</h2>
+    <ul>
+        {% for matrix_id in matrices %}
+            <li>{{ matrix_id }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label for="matrix_id">Select a Matrix ID:</label><br>
+        <select name="matrix_id" id="matrix_id" required>
+            {% for matrix_id in matrices %}
+                <option value="{{ matrix_id }}">{{ matrix_id }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="sequence">Enter DNA Sequence (Optional):</label><br>
+        <textarea name="sequence" id="sequence" rows="5" cols="50" placeholder="e.g., GTACGACGGAGTGTTATAAGATGGGAA..."></textarea><br><br>
+
+        <label for="file_upload">Upload a File (Optional):</label><br>
+        <input type="file" name="file_upload" id="file_upload" accept=".txt,.fasta"><br><br>
+
+        <button type="submit">Scan</button>
+        <button type="reset">Reset</button>
+    </form>
+
+    {% if download_link %}
+        <h3>Download File Results:</h3>
+        <a href="{{ download_link }}" class="button">Download Results</a>
+    {% endif %}
+
+    <a href="/" class="button">Back to Homepage</a>
+
+
+    {% if results %}
+        {% if results.error %}
+            <p style="color: red;">Error: {{ results.error }}</p>
+        {% else %}
+            <h3>Results for Matrix ID: {{ results.matrix_id }}</h3>
+
+            <h3>Position Frequency Matrix (PFM):</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>A</th>
+                        <th>C</th>
+                        <th>G</th>
+                        <th>T</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pos in range(pfm['A']|length) %}
+                        <tr>
+                            <td>{{ pos + 1 }}</td>
+                            <td>{{ pfm['A'][pos] }}</td>
+                            <td>{{ pfm['C'][pos] }}</td>
+                            <td>{{ pfm['G'][pos] }}</td>
+                            <td>{{ pfm['T'][pos] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3>Position Weight Matrix (PWM):</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>A</th>
+                        <th>C</th>
+                        <th>G</th>
+                        <th>T</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pos in range(pwm['A']|length) %}
+                        <tr>
+                            <td>{{ pos + 1 }}</td>
+                            <td>{{ "%.2f"|format(pwm['A'][pos]) }}</td>
+                            <td>{{ "%.2f"|format(pwm['C'][pos]) }}</td>
+                            <td>{{ "%.2f"|format(pwm['G'][pos]) }}</td>
+                            <td>{{ "%.2f"|format(pwm['T'][pos]) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3>Binding Sites:</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for position, score in results.binding_sites %}
+                        <tr>
+                            <td>{{ position }}</td>
+                            <td>{{ "%.2f"|format(score) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+
+
+</body>
+</html>
+
+
+

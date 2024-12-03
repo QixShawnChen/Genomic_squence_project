@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>UniProt Search</title>
+    <script src="https://cdn.jsdelivr.net/gh/nglviewer/ngl@latest/dist/ngl.js"></script>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            margin-top: 20px; /* Add spacing above buttons */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>UniProt Accession Search</h1>
+    <form method="POST">
+        <label for="uniprot_accession">Enter A UniProt ID:</label><br>
+        <textarea name="uniprot_accession" id="uniprot_accession" rows="5" cols="50" required 
+                  placeholder="Enter One Uniprot ID, e.g., O74807, P19930, B8E1A7, Q2LR26, ..."></textarea><br><br>
+    
+        <div class="button-container">
+            <button type="submit" class="button">Search</button>
+            <a href="/" class="button">Back to Home</a>
+        </div>
+    </form>
+
+    {% if uniprot_results %}
+        <h2>Search Result: {{ uniprot_accession }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in uniprot_results.items() %}
+                    <tr>
+                        <td><strong>{{ key }}</strong></td>
+                        <td>{{ value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if pdb_url or png_url %}
+            <h2>AlphaFold Visualization</h2>
+
+            <!-- 3D Protein Structure -->
+            {% if pdb_url %}
+                <h3>3D Protein Structure</h3>
+                <div id="viewer" style="width: 800px; height: 600px;"></div>
+                <script>
+                    var stage = new NGL.Stage("viewer");
+                    stage.loadFile("{{ pdb_url }}", { defaultRepresentation: true });
+                </script>
+            {% endif %}
+
+            <!-- Predicted Alignment Error Plot -->
+            {% if png_url %}
+                <h3>Predicted Alignment Error Plot</h3>
+                <img src="{{ png_url }}" alt="Predicted Alignment Error" style="width: 800px; height: auto;">
+            {% endif %}
+        {% else %}
+            <p>No AlphaFold data available for this accession.</p>
+        {% endif %}
+    {% elif uniprot_results.get("Error") %}
+        <p style="color: red;">Error: {{ uniprot_results["Error"] }}</p>
+    {% endif %}
+</body>
+</html>
+
+

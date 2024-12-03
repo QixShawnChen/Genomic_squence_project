@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter DNA Sequence</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            margin-top: 20px; /* Add spacing above buttons */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Enter DNA Sequence</h1>
+    <form method="POST" action="/enter-sequence">
+        <textarea name="sequence" rows="5" cols="50" placeholder="Enter your DNA sequence here"></textarea><br><br>
+        <label><strong>Select Functions:</strong></label><br>
+        <input type="checkbox" name="functions" value="transcription"> Transcription<br>
+        <input type="checkbox" name="functions" value="translation"> Translation<br>
+        <input type="checkbox" name="functions" value="find_orfs"> Find ORFs<br>
+        <input type="checkbox" name="functions" value="gc_content"> GC Content<br>
+        <input type="checkbox" name="functions" value="cpg_islands"> CpG Islands<br>
+        <input type="checkbox" name="functions" value="codon_usage"> Codon Usage<br>
+        <input type="checkbox" name="functions" value="restriction_sites"> Restriction Sites<br><br>
+        <div class="button-container">
+            <button type="submit">Analyze</button>
+            <a href="/" class="button">Back to Home</a>
+        </div>
+    </form>
+
+    {% if results %}
+    <h2>Results</h2>
+    <div>
+        {% for key, value in results.items() %}
+            <p><strong>{{ key }}:</strong> {{ value }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>
